@@ -23,6 +23,11 @@
 #import "MaplyVectorMarkerStyle.h"
 #import "MaplyVectorPolygonStyle.h"
 #import "MaplyVectorTextStyle.h"
+
+// ------ Edited By Zhikang Qin
+#import "MaplyVectorPatternLineStyle.h"
+// ------ End Edit
+
 #import "WhirlyGlobe.h"
 
 using namespace WhirlyKit;
@@ -75,6 +80,11 @@ using namespace WhirlyKit;
     } else if ([typeStr isEqualToString:@"MarkersSymbolizer"])
     {
         tileStyle = [[MaplyVectorTileStyleMarker alloc] initWithStyleEntry:styleEntry settings:settings viewC:viewC];
+        
+    // ------ Edited By Zhikang Qin
+    } else if([typeStr isEqualToString:@"LinePatternSymbolizer"]) {
+        tileStyle = [[MaplyVectorTileStylePatternLine alloc] initWithStyleEntry:styleEntry settings:settings viewC:viewC];
+    // ------ End Edit
     } else {
         // Set up one that doesn't do anything
         NSLog(@"Unknown symbolizer type %@",typeStr);

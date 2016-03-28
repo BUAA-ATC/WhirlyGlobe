@@ -687,6 +687,14 @@ bool MapnikConfig::parseXML(XMLDocument *doc,const std::vector<std::string> &pat
                         symType = PolygonSymbolizer;
                     }
                     
+                    // ------ Edited By Zhikang Qin
+                    else if (!name.compare("LinePatternSymbolizer"))
+                    {
+                        dataType = SymbolDataLinear;
+                        symType = LinePatternSymbolizer;
+                    }
+                    // ------ End Edit
+                    
                     if (symType != UnknownSymbolizer)
                     {
                         int whichSym = (int)symbolizerTable.symbolizers.size();

@@ -102,8 +102,12 @@ void ConvertGeometryType(OGRGeometry *inGeom,MapnikConfig::SymbolDataType dataTy
         case wkbPoint:
         {
             OGRPoint *pt = (OGRPoint *)inGeom;
-            if (dataType != MapnikConfig::SymbolDataPoint)
-                return;
+            
+            // ------ Edited By Zhikang Qin
+//            if (dataType != MapnikConfig::SymbolDataPoint)
+//                return;
+            // ------ End Edit
+            
             retGeom.push_back(pt->clone());
             return;
         }
@@ -111,8 +115,12 @@ void ConvertGeometryType(OGRGeometry *inGeom,MapnikConfig::SymbolDataType dataTy
         case wkbLineString:
         {
             OGRLineString *lin = (OGRLineString *)inGeom;
-            if (dataType != MapnikConfig::SymbolDataLinear)
-                return;
+            
+            // ------ Edited By Zhikang Qin
+//            if (dataType != MapnikConfig::SymbolDataLinear)
+//                return;
+            // ------ End Edit
+            
             retGeom.push_back(lin->clone());
             return;
         }

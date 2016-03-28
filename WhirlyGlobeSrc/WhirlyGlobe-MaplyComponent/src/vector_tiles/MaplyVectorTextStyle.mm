@@ -41,6 +41,11 @@ typedef enum {
     NSMutableDictionary *desc;
     float dx,dy;
     float textSize;
+    
+    // ------ Edited By Zhikang Qin
+    bool allowOverlap;
+    // ------ End Edit
+    
     TextSymbolizerPlacement placement;
     TextSymbolizerTextTransform textTransform;
     NSString *textField;
@@ -78,6 +83,12 @@ typedef enum {
         {
             subStyle->textSize = [styleEntry[@"size"] floatValue];
         }
+        
+        // ------ Edited By Zhikang Qin
+        if (styleEntry[@"allow-overlap"])
+            subStyle->allowOverlap = [styleEntry[@"allow-overlap"] boolValue];
+        // ------ End Edit
+        
         UIFont *font = nil;
         if (settings.fontName)
             font = [UIFont fontWithName:settings.fontName size:subStyle->textSize];
@@ -133,6 +144,15 @@ typedef enum {
         if ([styleEntry[@"tilegeom"] isEqualToString:@"add"])
             self.geomAdditive = true;
         
+        // ------ Edited By Zhikang Qin
+        int drawPriority = 0;
+        if (styleEntry[@"drawpriority"])
+        {
+            drawPriority = (int)[styleEntry[@"drawpriority"] integerValue];
+        }
+        subStyle->desc[kMaplyDrawPriority] = @(drawPriority + kMaplyMarkerDrawPriorityDefault);
+        // ------ End Edit
+        
         subStyle->desc = [NSMutableDictionary dictionary];
         subStyle->desc[kMaplyTextColor] = fillColor;
         subStyle->desc[kMaplyFont] = font;
@@ -147,8 +167,10 @@ typedef enum {
 
         [self resolveVisibility:styleEntry settings:settings desc:subStyle->desc];
         
-        if(styleEntry[@"value"])
-            subStyle->textField = styleEntry[@"value"];
+        // ------ Edited By Zhikang Qin
+        if(styleEntry[@"attribute"])
+            subStyle->textField = styleEntry[@"attribute"];
+        // ------ End Edit
         else
             subStyle->textField = @"[name]";
         
@@ -210,6 +232,10 @@ typedef enum {
                         }
 
                         label.keepUpright = true;
+                        
+                        // ------ Edited By Zhikang Qin
+                        label.text = [NSString stringWithFormat:@"      %@      ",label.text];
+                        // ------ End Edit
                     } else {
                         label = nil;
                     }
@@ -227,7 +253,14 @@ typedef enum {
                 {
                     label.offset = CGPointMake(subStyle->dx, subStyle->dy);
                     // Make bigger text slightly more important
-                    label.layoutImportance = 1.0 + subStyle->textSize/1000;
+                    
+                    // ------ Edited By Zhikang Qin
+                    if (subStyle->allowOverlap)
+                        label.layoutImportance = MAXFLOAT;
+                    else
+                        label.layoutImportance = 1.0 + subStyle->textSize/1000;
+                    // ------ End Edit
+                    
                     label.selectable = false;
                     [labels addObject:label];
                 }

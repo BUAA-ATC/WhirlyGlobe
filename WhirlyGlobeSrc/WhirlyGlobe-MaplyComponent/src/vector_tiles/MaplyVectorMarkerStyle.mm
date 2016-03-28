@@ -32,6 +32,7 @@
     float height;
     float strokeWidth;
     bool allowOverlap;
+    float dx,dy;
     NSString *markerImageTemplate;
 }
 
@@ -79,6 +80,25 @@
         if (subStyle->fillColor && !subStyle->strokeColor)
             subStyle->strokeColor = [UIColor blackColor];
         
+        // ------ Edited By Zhikang Qin
+        subStyle->dx = 0;
+        subStyle->dy = 0;
+        if (styleEntry[@"transform"]){
+            NSString *func = styleEntry[@"transform"];
+            if ([func containsString:@"translate"]) {
+                NSRange range;
+                range.location = 10;
+                range.length = [func length] - 11;
+                NSString *translateValueString = [func substringWithRange:range];
+                NSArray *point = [translateValueString componentsSeparatedByString:@","];
+                if ([point count] == 2) {
+                    subStyle->dx = [[point objectAtIndex:0] floatValue];
+                    subStyle->dy = [[point objectAtIndex:1] floatValue];
+                }
+            }
+        }
+        // ------ End Edit
+        
         subStyle->desc = [NSMutableDictionary dictionary];
         subStyle->desc[kMaplyEnable] = @NO;
         [self resolveVisibility:styleEntry settings:settings desc:subStyle->desc];
@@ -106,7 +126,11 @@
 - (NSArray *)buildObjects:(NSArray *)vecObjs forTile:(MaplyTileID)tileID viewC:(MaplyBaseViewController *)viewC;
 {    
     bool isRetina = [UIScreen mainScreen].scale > 1.0;
-
+    
+    // ------ Edited By Zhikang Qin
+    double dx,dy;
+    // ------ End Edit
+    
     // One marker per object
     NSMutableArray *compObjs = [NSMutableArray array];
     for (MaplyVectorTileSubStyleMarker *subStyle in subStyles)
@@ -132,7 +156,29 @@
             }
 
             if (marker.image) {
-                marker.loc = [vec center];
+                
+                // ------ Edited By Zhikang Qin
+                MaplyCoordinate middle;
+                double rot;
+                if ([vec linearMiddle:&middle rot:&rot displayCoordSys:viewC.coordSystem])
+                {
+                    //TODO: text-max-char-angle-delta
+                    //TODO: rotation calculation is not ideal, it is between 2 points, but it needs to be avergared over a longer distance
+                    marker.loc = middle;
+                    marker.rotation = rot+M_PI/2.0;
+                    if (rot < M_PI && rot >= 0) {
+                        dx = -subStyle->dx;
+                        dy = -subStyle->dy;
+                    } else {
+                        dx = subStyle->dx;
+                        dy = subStyle->dy;
+                    }
+                } else {
+                    marker.loc = [vec center];
+                }
+                marker.offset = CGPointMake(dx, dy);
+                // ------ End Edit
+                
                 marker.layoutImportance = settings.markerImportance;
                 if (marker.image)
                 {

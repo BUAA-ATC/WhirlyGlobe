@@ -31,7 +31,10 @@ public:
     typedef enum {SymbolDataPoint=0,SymbolDataLinear,SymbolDataAreal,SymbolDataUnknown} SymbolDataType;
     
     // The symbolizer type itself
-    typedef enum {MarkersSymbolizer,LineSymbolizer,TextSymbolizer,PolygonSymbolizer,UnknownSymbolizer} SymbolizerType;
+    
+    // ------ Edited By Zhikang Qin
+    typedef enum {MarkersSymbolizer,LineSymbolizer,TextSymbolizer,PolygonSymbolizer,LinePatternSymbolizer,UnknownSymbolizer} SymbolizerType;
+    // ------ End Edit
 
     class Layer;
     
