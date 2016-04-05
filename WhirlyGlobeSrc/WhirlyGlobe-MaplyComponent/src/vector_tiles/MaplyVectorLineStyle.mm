@@ -75,7 +75,12 @@
                                        }];
         
         // Decide whether to use wide lines in this particular sub style
-        bool useWideVectors = (settings.useWideVectors && (strokeWidth >= settings.wideVecCuttoff || styleEntry[@"stroke-dasharray"]));
+        
+        // ------ Edited By Hongyue Sun
+//        bool useWideVectors = (settings.useWideVectors && (strokeWidth >= settings.wideVecCuttoff || styleEntry[@"stroke-dasharray"]));
+        bool useWideVectors = ((strokeWidth >= settings.wideVecCuttoff || styleEntry[@"stroke-dasharray"]));
+        // ------ End Edit
+        
         wideVecs[which] = useWideVectors;
         
         if(useWideVectors)
