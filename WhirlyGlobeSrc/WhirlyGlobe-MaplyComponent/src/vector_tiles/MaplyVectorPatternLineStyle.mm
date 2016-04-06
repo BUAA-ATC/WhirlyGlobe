@@ -57,7 +57,7 @@
             CGImageRef image = patternImage.CGImage;
             CGDataProviderRef provider = CGImageGetDataProvider(image);
             NSData* data = CFBridgingRelease(CGDataProviderCopyData(provider));
-            const uint8_t *pixels = [data bytes];
+            const uint8_t *pixels = static_cast<const uint8_t *>([data bytes]);
             for (int i = 0; i < [data length]; i += 4) {
                 uint8_t r = pixels[i];
                 uint8_t g = pixels[i + 1];
@@ -70,9 +70,15 @@
             }
             
             MaplyTexture *patternTexture = [viewC addTexture:patternImage
-                                                 imageFormat:MaplyImageIntRGBA
-                                                   wrapFlags:MaplyImageWrapY
+                                                        desc:@{
+                                                               kMaplyTexMinFilter: kMaplyMinFilterLinear,
+                                                               kMaplyTexMagFilter: kMaplyMinFilterLinear,
+                                                               kMaplyTexWrapX: @true,
+                                                               kMaplyTexWrapY: @true,
+                                                               kMaplyTexFormat: @(MaplyImageIntRGBA)
+                                                               }
                                                         mode:MaplyThreadCurrent];
+            
             int height = patternImage.size.height;
             if (height & (height - 1)) {
                 NSLog(@"The height of texture image is not power of 2");
@@ -100,7 +106,7 @@
     return self;
 }
 
-- (NSArray *)buildObjects:(NSArray *)vecObjs viewC:(MaplyBaseViewController *)viewC;
+- (NSArray *)buildObjects:(NSArray *)vecObjs forTile:(MaplyTileID)tileID viewC:(MaplyBaseViewController *)viewC
 {
     MaplyComponentObject *baseWideObj = nil;
     NSMutableArray *compObjs = [NSMutableArray array];
