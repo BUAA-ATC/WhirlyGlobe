@@ -44,6 +44,7 @@ typedef enum {
     
     // ------ Edited By Zhikang Qin
     bool allowOverlap;
+    NSString *rotField;
     // ------ End Edit
     
     TextSymbolizerPlacement placement;
@@ -87,6 +88,8 @@ typedef enum {
         // ------ Edited By Zhikang Qin
         if (styleEntry[@"allow-overlap"])
             subStyle->allowOverlap = [styleEntry[@"allow-overlap"] boolValue];
+        if (styleEntry[@"rotField"])
+            subStyle->rotField = styleEntry[@"rotField"];
         // ------ End Edit
         
         UIFont *font = nil;
@@ -255,6 +258,9 @@ typedef enum {
                     // Make bigger text slightly more important
                     
                     // ------ Edited By Zhikang Qin
+                    if (subStyle->rotField) {
+                        label.rotation = ((NSString *)vec.attributes[subStyle->rotField]).doubleValue;
+                    }
                     if (subStyle->allowOverlap)
                         label.layoutImportance = MAXFLOAT;
                     else

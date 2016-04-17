@@ -33,6 +33,7 @@
     float strokeWidth;
     bool allowOverlap;
     float dx,dy;
+    NSString *rotField;
     NSString *markerImageTemplate;
 }
 
@@ -85,6 +86,8 @@
             subStyle->strokeColor = [UIColor blackColor];
         
         // ------ Edited By Zhikang Qin
+        if (styleEntry[@"rotField"])
+            subStyle->rotField = styleEntry[@"rotField"];
         subStyle->dx = 0;
         subStyle->dy = 0;
         if (styleEntry[@"transform"]){
@@ -181,6 +184,9 @@
                     marker.loc = [vec center];
                 }
                 marker.offset = CGPointMake(dx, dy);
+                if (subStyle->rotField) {
+                    marker.rotation = ((NSString *)vec.attributes[subStyle->rotField]).doubleValue;
+                }
                 // ------ End Edit
                 
                 marker.layoutImportance = settings.markerImportance;
