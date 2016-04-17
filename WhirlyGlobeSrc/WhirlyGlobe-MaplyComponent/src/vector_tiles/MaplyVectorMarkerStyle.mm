@@ -34,6 +34,7 @@
     bool allowOverlap;
     float dx,dy;
     NSString *rotField;
+    NSString *imagePathField;
     NSString *markerImageTemplate;
 }
 
@@ -88,6 +89,8 @@
         // ------ Edited By Zhikang Qin
         if (styleEntry[@"rotField"])
             subStyle->rotField = styleEntry[@"rotField"];
+        if (styleEntry[@"imagePathField"])
+            subStyle->imagePathField = styleEntry[@"imagePathField"];
         subStyle->dx = 0;
         subStyle->dy = 0;
         if (styleEntry[@"transform"]){
@@ -149,6 +152,18 @@
             marker.selectable = self.selectable;
             if(subStyle->markerImage)
                 marker.image = subStyle->markerImage;
+            
+            // ------ Edited By Zhikang Qin
+            else if (subStyle->imagePathField)
+                marker.image = [MaplyIconManager iconForName:vec.attributes[subStyle->imagePathField]
+                                                        size:CGSizeMake(settings.markerScale*subStyle->width+2,
+                                                                        settings.markerScale*subStyle->height+2)
+                                                       color:[UIColor blackColor]
+                                                 circleColor:subStyle->fillColor
+                                                  strokeSize:settings.markerScale*subStyle->strokeWidth
+                                                 strokeColor:subStyle->strokeColor];
+            // ------ End Edit
+                
             else {
                 NSString *markerName = [self formatText:subStyle->markerImageTemplate forObject:vec];
                 marker.image =  [MaplyIconManager iconForName:markerName
