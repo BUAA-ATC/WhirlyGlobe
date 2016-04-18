@@ -45,6 +45,7 @@ typedef enum {
     // ------ Edited By Zhikang Qin
     bool allowOverlap;
     NSString *rotField;
+    double startLonField, startLatField, endLonField, endLatField;
     // ------ End Edit
     
     TextSymbolizerPlacement placement;
@@ -90,6 +91,19 @@ typedef enum {
             subStyle->allowOverlap = [styleEntry[@"allow-overlap"] boolValue];
         if (styleEntry[@"rotField"])
             subStyle->rotField = styleEntry[@"rotField"];
+        
+        if (styleEntry[@"startLonField"])
+            subStyle->startLonField = [styleEntry[@"startLonField"] doubleValue];
+        
+        if (styleEntry[@"startLatField"])
+            subStyle->startLonField = [styleEntry[@"startLatField"] doubleValue];
+        
+        if (styleEntry[@"endLonField"])
+            subStyle->startLonField = [styleEntry[@"endLonField"] doubleValue];
+        
+        if (styleEntry[@"endLatField"])
+            subStyle->startLonField = [styleEntry[@"endLatField"] doubleValue];
+        
         // ------ End Edit
         
         UIFont *font = nil;
@@ -171,8 +185,13 @@ typedef enum {
         [self resolveVisibility:styleEntry settings:settings desc:subStyle->desc];
         
         // ------ Edited By Zhikang Qin
-        if(styleEntry[@"attribute"])
+        if(styleEntry[@"attribute"]) {
             subStyle->textField = styleEntry[@"attribute"];
+            NSArray *array = [subStyle->textField componentsSeparatedByString:@"]["];
+            if (array.count > 1) {
+                subStyle->textField = [NSString stringWithFormat:@"%@]", array[0]];
+            }
+        }
         // ------ End Edit
         else
             subStyle->textField = @"[name]";
@@ -258,6 +277,18 @@ typedef enum {
                     // Make bigger text slightly more important
                     
                     // ------ Edited By Zhikang Qin
+                    if (subStyle->startLonField && subStyle->startLatField && subStyle->endLonField && subStyle->endLatField) {
+                        MaplyCoordinate middle;
+                        double rot;
+                        if ([vec linearMiddle:&middle rot:&rot displayCoordSys:displaySystem]) {
+                            label.loc = middle;
+                            label.rotation = -1 * rot+M_PI/2.0;
+                            if(label.rotation > M_PI_2 || label.rotation < -M_PI_2) {
+                                label.rotation += M_PI;
+                                label.keepUpright = true;
+                            }
+                        }
+                    }
                     if (subStyle->rotField) {
                         label.rotation = ((NSString *)vec.attributes[subStyle->rotField]).doubleValue;
                     }
