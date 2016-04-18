@@ -45,7 +45,7 @@ typedef enum {
     // ------ Edited By Zhikang Qin
     bool allowOverlap;
     NSString *rotField;
-    double startLonField, startLatField, endLonField, endLatField;
+    NSString *startLonField, *startLatField, *endLonField, *endLatField;
     // ------ End Edit
     
     TextSymbolizerPlacement placement;
@@ -89,20 +89,21 @@ typedef enum {
         // ------ Edited By Zhikang Qin
         if (styleEntry[@"allow-overlap"])
             subStyle->allowOverlap = [styleEntry[@"allow-overlap"] boolValue];
+        
         if (styleEntry[@"rotField"])
             subStyle->rotField = styleEntry[@"rotField"];
         
         if (styleEntry[@"startLonField"])
-            subStyle->startLonField = [styleEntry[@"startLonField"] doubleValue];
+            subStyle->startLonField = styleEntry[@"startLonField"];
         
         if (styleEntry[@"startLatField"])
-            subStyle->startLonField = [styleEntry[@"startLatField"] doubleValue];
+            subStyle->startLatField = styleEntry[@"startLatField"];
         
         if (styleEntry[@"endLonField"])
-            subStyle->startLonField = [styleEntry[@"endLonField"] doubleValue];
+            subStyle->endLonField = styleEntry[@"endLonField"];
         
         if (styleEntry[@"endLatField"])
-            subStyle->startLonField = [styleEntry[@"endLatField"] doubleValue];
+            subStyle->endLatField = styleEntry[@"endLatField"];
         
         // ------ End Edit
         
@@ -280,7 +281,11 @@ typedef enum {
                     if (subStyle->startLonField && subStyle->startLatField && subStyle->endLonField && subStyle->endLatField) {
                         MaplyCoordinate middle;
                         double rot;
-                        if ([vec linearMiddle:&middle rot:&rot displayCoordSys:displaySystem]) {
+                        MaplyCoordinate coor[2];
+                        coor[0] = MaplyCoordinateMakeWithDegrees(((NSString *)vec.attributes[subStyle->startLonField]).doubleValue, ((NSString *)vec.attributes[subStyle->startLatField]).doubleValue);
+                        coor[1] = MaplyCoordinateMakeWithDegrees(((NSString *)vec.attributes[subStyle->endLonField]).doubleValue, ((NSString *)vec.attributes[subStyle->endLatField]).doubleValue);
+                        MaplyVectorObject *auxiliaryVec = [[MaplyVectorObject alloc] initWithLineString:coor numCoords:2 attributes:nil];
+                        if ([auxiliaryVec linearMiddle:&middle rot:&rot displayCoordSys:displaySystem]) {
                             label.loc = middle;
                             label.rotation = -1 * rot+M_PI/2.0;
                             if(label.rotation > M_PI_2 || label.rotation < -M_PI_2) {
