@@ -101,7 +101,10 @@ using namespace WhirlyKit;
     _uuid = styleEntry[@"uuid"];
     if ([styleEntry[@"tilegeom"] isEqualToString:@"add"])
         self.geomAdditive = true;
-    _selectable = styleEntry[kMaplySelectable];
+    
+    // ------ Edited By Zhikang Qin
+    _selectable = [(NSNumber *)styleEntry[kMaplySelectable] boolValue];
+    // ------ End Edit
     
     return self;
 }
