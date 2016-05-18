@@ -73,29 +73,37 @@ using namespace WhirlyGlobe;
 - (void) userDidTapLayerThread:(MaplyTapMessage *)msg
 {
     // First, we'll look for labels and markers
-    SimpleIdentity selID = ((SelectionManager *)scene->getManager(kWKSelectionManager))->pickObject(Point2f(msg.touchLoc.x,msg.touchLoc.y),10.0,mapView);
-
-    NSObject *selObj;
-    if (selID != EmptyIdentity)
-    {       
-        // Found something.  Now find the associated object
-        SelectObjectSet::iterator it = selectObjectSet.find(SelectObject(selID));
-        if (it != selectObjectSet.end())
+    std::vector<SelectionManager::SelectedObject> selObjs;
+    SelectionManager *selectionManager = ((SelectionManager *)scene->getManager(kWKSelectionManager));
+    selectionManager->pickObjects(Point2f(msg.touchLoc.x,msg.touchLoc.y),10.0,mapView, selObjs);
+    
+    std::vector<SelectionManager::SelectedObject>::iterator it = selObjs.begin();
+    
+    NSMutableArray *selObjArray = [NSMutableArray array];
+    
+    while (it != selObjs.end()) {
+        SimpleIdentity selectID = it->selectID;
+        SelectObjectSet::iterator seletedIt = selectObjectSet.find(SelectObject(selectID));
+        if (seletedIt != selectObjectSet.end())
         {
-            selObj = it->obj;
+            [selObjArray addObject:seletedIt->obj];
         }
-    } else {
+        it++;
+    }
+    
+    if(selObjArray.count == 0) {
         // Next, try the vectors
         // Note: Ignoring everything but the first return
         NSArray *vecObjs = [self findVectorsInPoint:Point2f(msg.whereGeo.x(),msg.whereGeo.y()) inView:(MaplyBaseViewController*)self.viewController multi:false];
-        if ([vecObjs count] > 0)
-            selObj = [vecObjs objectAtIndex:0];
+        if ([vecObjs count] > 0) {
+            [selObjArray addObjectsFromArray:vecObjs];
+        }
     }
     
     // Tell the view controller about it
     dispatch_async(dispatch_get_main_queue(),^
                    {
-                       [_viewController handleSelection:msg didSelect:selObj];
+                       [_viewController handleSelection:msg didSelect:selObjArray];
                    }
                    );
 }
