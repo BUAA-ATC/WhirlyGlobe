@@ -73,6 +73,8 @@ using namespace WhirlyGlobe;
 - (void) userDidTapLayerThread:(MaplyTapMessage *)msg
 {
     // First, we'll look for labels and markers
+    
+    // ------ Edited By Zhikang Qin Sun hongyue
     std::vector<SelectionManager::SelectedObject> selObjs;
     SelectionManager *selectionManager = ((SelectionManager *)scene->getManager(kWKSelectionManager));
     selectionManager->pickObjects(Point2f(msg.touchLoc.x,msg.touchLoc.y),10.0,mapView, selObjs);
@@ -106,6 +108,8 @@ using namespace WhirlyGlobe;
                        [_viewController handleSelection:msg didSelect:selObjArray];
                    }
                    );
+    // ------ End Edit
+    
 }
 
 // Check for a selection
