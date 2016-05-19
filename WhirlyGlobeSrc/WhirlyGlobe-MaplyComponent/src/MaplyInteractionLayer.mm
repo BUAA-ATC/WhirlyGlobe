@@ -102,6 +102,10 @@ using namespace WhirlyGlobe;
         }
     }
     
+    if (selObjArray.count == 0) {
+        selObjArray = nil;
+    }
+    
     // Tell the view controller about it
     dispatch_async(dispatch_get_main_queue(),^
                    {
