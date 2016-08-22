@@ -41,5 +41,7 @@
 @property (nonatomic,assign) WhirlyKit::Point3f worldLoc;
 /// Where the eye was.
 @property (nonatomic,assign) float heightAboveSurface;
+/// 将消息标记为长按 Added by Sun
+@property (nonatomic, assign) BOOL isLongPressed;
 
 @end

@@ -56,6 +56,11 @@
   */
 - (void)maplyViewController:(MaplyViewController *)viewC didTapAt:(MaplyCoordinate)coord;
 
+/** @brief User longPressed at a given location. Added by Sun
+ @details This is a longPress at a specific location on the map.  This won't be called if they tapped and selected, just for LongPress.
+ */
+- (void)maplyViewController:(MaplyViewController *__nonnull)viewC didLongPressedAt:(MaplyCoordinate)coord;
+
 /** @brief Called when the map starts moving.
  @param viewC The map view controller.
  @param userMotion Set if this is motion being caused by the user, rather than a call to set location.

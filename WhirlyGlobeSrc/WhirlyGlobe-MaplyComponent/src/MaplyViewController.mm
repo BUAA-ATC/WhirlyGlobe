@@ -278,6 +278,7 @@ using namespace Maply;
     {
         // Wire up the gesture recognizers
         tapDelegate = [MaplyTapDelegate tapDelegateForView:glView mapView:mapView];
+        longPressDelegate = [MaplyLongPressDelegate longPressDelegateForView:glView mapView:mapView];
         panDelegate = [MaplyPanDelegate panDelegateForView:glView mapView:mapView];
         pinchDelegate = [MaplyPinchDelegate pinchDelegateForView:glView mapView:mapView];
         pinchDelegate.minZoom = [mapView minHeightAboveSurface];
@@ -864,11 +865,16 @@ using namespace Maply;
                 [_delegate maplyViewController:self didSelect:selectedObj];
         }
     } else {
-        // The user didn't select anything, let the delegate know.
+        // The user didn't select anything, let the delegate know. Modified by Sun
         if (_delegate)
         {
-            if ([_delegate respondsToSelector:@selector(maplyViewController:didTapAt:)])
+            if (msg.isLongPressed) {
+                if ([_delegate respondsToSelector:@selector(maplyViewController:didLongPressedAt:)])
+                    [_delegate maplyViewController:self didLongPressedAt:coord];
+            }
+            else if ([_delegate respondsToSelector:@selector(maplyViewController:didTapAt:)])
                 [_delegate maplyViewController:self didTapAt:coord];
+            
         }
         if (_autoMoveToTap)
             [self animateToPosition:coord time:1.0];
