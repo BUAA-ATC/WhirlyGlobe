@@ -453,6 +453,8 @@
 		8813F5721B468B16004E595F /* WhirlyOctEncoding.h in Headers */ = {isa = PBXBuildFile; fileRef = 8813F5711B468B16004E595F /* WhirlyOctEncoding.h */; };
 		884D4F6D1975812700F2D517 /* MaplyTouchCancelAnimationDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 884D4F6B1975812700F2D517 /* MaplyTouchCancelAnimationDelegate.mm */; };
 		884D4F6F1975818C00F2D517 /* MaplyTouchCancelAnimationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 884D4F6E1975818C00F2D517 /* MaplyTouchCancelAnimationDelegate.h */; };
+		A6DA0CE71D6AAFE600A36A42 /* MaplyLongPressDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = A6DA0CE61D6AAFE600A36A42 /* MaplyLongPressDelegate.mm */; };
+		A6DA0CE91D6AB04600A36A42 /* MaplyLongPressDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = A6DA0CE81D6AB04600A36A42 /* MaplyLongPressDelegate.h */; };
 		E594E38C17E81434008D5741 /* MaplyRotateDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = E594E38B17E81434008D5741 /* MaplyRotateDelegate.mm */; };
 /* End PBXBuildFile section */
 
@@ -947,6 +949,8 @@
 		8813F5711B468B16004E595F /* WhirlyOctEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhirlyOctEncoding.h; sourceTree = "<group>"; };
 		884D4F6B1975812700F2D517 /* MaplyTouchCancelAnimationDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MaplyTouchCancelAnimationDelegate.mm; sourceTree = "<group>"; tabWidth = 4; };
 		884D4F6E1975818C00F2D517 /* MaplyTouchCancelAnimationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaplyTouchCancelAnimationDelegate.h; sourceTree = "<group>"; };
+		A6DA0CE61D6AAFE600A36A42 /* MaplyLongPressDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MaplyLongPressDelegate.mm; sourceTree = "<group>"; };
+		A6DA0CE81D6AB04600A36A42 /* MaplyLongPressDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaplyLongPressDelegate.h; sourceTree = "<group>"; };
 		AA747D9E0F9514B9006C5449 /* WhirlyGlobeLib_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhirlyGlobeLib_Prefix.pch; sourceTree = SOURCE_ROOT; };
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E594E38917E8133D008D5741 /* MaplyRotateDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaplyRotateDelegate.h; sourceTree = "<group>"; };
@@ -1400,6 +1404,7 @@
 		2B7EF5261603EF1A00D4079F /* interaction */ = {
 			isa = PBXGroup;
 			children = (
+				A6DA0CE81D6AB04600A36A42 /* MaplyLongPressDelegate.h */,
 				2BA726DA1778EB11006C710B /* MaplyAnimateFlat.h */,
 				2B03701314C9FA9000A51AC4 /* MaplyAnimateTranslation.h */,
 				2B03701214C9FA9000A51AC4 /* MaplyAnimateTranslateMomentum.h */,
@@ -1905,6 +1910,7 @@
 		2BE6EE5312E4F3D100415490 /* interaction */ = {
 			isa = PBXGroup;
 			children = (
+				A6DA0CE61D6AAFE600A36A42 /* MaplyLongPressDelegate.mm */,
 				2B95F91818A5AB2B00D72645 /* GlobeDoubleTapDelegate.mm */,
 				2B95F91918A5AB2B00D72645 /* GlobeDoubleTapDragDelegate.mm */,
 				2B95F91A18A5AB2B00D72645 /* GlobeTwoFingerTapDelegate.mm */,
@@ -1994,6 +2000,7 @@
 				2B3A0D48133405780085EF43 /* UIColor+Stuff.h in Headers */,
 				2B3A0D4B133405780085EF43 /* EAGLView.h in Headers */,
 				2B3A0D4C133405780085EF43 /* PinchDelegate.h in Headers */,
+				A6DA0CE91D6AB04600A36A42 /* MaplyLongPressDelegate.h in Headers */,
 				2B3A0D4D133405780085EF43 /* SwipeDelegate.h in Headers */,
 				2B3A0D4E133405780085EF43 /* PanDelegate.h in Headers */,
 				2B3A0D4F133405780085EF43 /* TapMessage.h in Headers */,
@@ -2221,6 +2228,7 @@
 				2B65F90E137DBEF3004326A9 /* sqlhelpers.mm in Sources */,
 				2B194428138B0CD000E8FA42 /* AnimateRotation.mm in Sources */,
 				2B194432138C718700E8FA42 /* AnimateViewMomentum.mm in Sources */,
+				A6DA0CE71D6AAFE600A36A42 /* MaplyLongPressDelegate.mm in Sources */,
 				2B44187C13A2DA3C00514EDE /* RotateDelegate.mm in Sources */,
 				2B08059817EB95A40016C813 /* LoadedTile.mm in Sources */,
 				2B58C6931445439700EEF3C3 /* Generator.mm in Sources */,
