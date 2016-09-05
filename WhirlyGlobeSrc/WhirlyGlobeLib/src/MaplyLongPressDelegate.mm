@@ -74,7 +74,6 @@ using namespace WhirlyKit;
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:MaplyTapMsg object:msg]];
     } else {
         // Not expecting this case
-        NSLog(@"NOEXPECT");
     }
 }
 
