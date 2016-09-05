@@ -896,35 +896,6 @@ using namespace Maply;
     // End Edit
 }
 
-- (void)handleStart:(MaplyTapMessage *)msg {
-    
-}
-
-- (void)handleStart:(MaplyTapMessage *)msg didSelect:(NSObject *)selectedObj{
-    
-}
-
-// 正在移动
-- (void)handleMoving:(MaplyTapMessage *)msg {
-    MaplyCoordinate coord;
-    coord.x = msg.whereGeo.lon();
-    coord.y = msg.whereGeo.lat();
-    
-    // Adjust this if it's outside geographic bounds
-    if (coord.x < -M_PI)
-        coord.x += 2*M_PI * std::ceil(std::abs((coord.x + M_PI)/(2*M_PI)));
-    if (coord.x > M_PI)
-        coord.x -= 2*M_PI * std::ceil((coord.x - M_PI)/(2*M_PI));
-    if (msg.isLongPressed) {
-        
-    }
-}
-
-- (void)handleStop:(MaplyTapMessage *)msg {
-    
-}
-
-
 - (void)tapOnMap:(NSNotification *)note
 {
     MaplyTapMessage *msg = note.object;

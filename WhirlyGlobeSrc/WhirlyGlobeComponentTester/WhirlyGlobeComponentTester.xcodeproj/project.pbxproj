@@ -426,7 +426,6 @@
 		2BFD27EA170B933C00127EF5 /* ZMB.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 2BFD26F1170B933C00127EF5 /* ZMB.geojson */; };
 		2BFD27EB170B933C00127EF5 /* ZWE.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 2BFD26F2170B933C00127EF5 /* ZWE.geojson */; };
 		2BFF026217A9BA2D00007842 /* AnimationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BFF026117A9BA2D00007842 /* AnimationTest.m */; };
-		A62F41F01D74310200A69AE5 /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = A62F41EF1D74310200A69AE5 /* circle.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -892,7 +891,6 @@
 		2BFD26F2170B933C00127EF5 /* ZWE.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ZWE.geojson; sourceTree = "<group>"; };
 		2BFF026017A9BA2C00007842 /* AnimationTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationTest.h; sourceTree = "<group>"; };
 		2BFF026117A9BA2D00007842 /* AnimationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationTest.m; sourceTree = "<group>"; };
-		A62F41EF1D74310200A69AE5 /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -919,7 +917,6 @@
 		2B62DD5116E7F0BC001F52FC = {
 			isa = PBXGroup;
 			children = (
-				A62F41EF1D74310200A69AE5 /* circle.png */,
 				2BC989E117DC28350071DA9E /* libz.dylib */,
 				2BB54EE117CEB8A20065451F /* Default@2x.png */,
 				2BB54EDE17CEB88F0065451F /* Default-568h@2x.png */,
@@ -1919,7 +1916,6 @@
 				2BFD27C6170B933C00127EF5 /* SWZ.geojson in Resources */,
 				2BFD27C7170B933C00127EF5 /* SXM.geojson in Resources */,
 				2BFD27C8170B933C00127EF5 /* SYC.geojson in Resources */,
-				A62F41F01D74310200A69AE5 /* circle.png in Resources */,
 				2BFD27C9170B933C00127EF5 /* SYR.geojson in Resources */,
 				2BFD27CA170B933C00127EF5 /* TCA.geojson in Resources */,
 				2BFD27CB170B933C00127EF5 /* TCD.geojson in Resources */,

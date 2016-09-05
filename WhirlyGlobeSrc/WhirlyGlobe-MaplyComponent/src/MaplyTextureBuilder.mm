@@ -66,7 +66,7 @@
     
     CGContextClearRect(ctx, CGRectMake(0, 0, size.width, size.height));
     [[UIColor whiteColor] setFill];
-    [[UIColor redColor] setStroke];
+    [[UIColor whiteColor] setStroke];
     
     // Precalculate the opacity values since they're the same for every row
     std::vector<float> opacityVals;
@@ -119,8 +119,7 @@
                     float opacity = opacityVals[xx];
                     // Do a gradiant across the image
                     [[UIColor colorWithWhite:1.0 alpha:opacity] setFill];
-                    //[[UIColor colorWithWhite:1.0 alpha:opacity] setStroke];
-                    [[UIColor colorWithRed:255/255.0 green:0/255.0 blue:0/255.0 alpha:1.0] setStroke];
+                    [[UIColor colorWithWhite:1.0 alpha:opacity] setStroke];
                     CGContextFillRect(ctx, CGRectMake(xx, (curY+jj)/(float)eleSum * size.height, 1, 1));
                 }
             }
