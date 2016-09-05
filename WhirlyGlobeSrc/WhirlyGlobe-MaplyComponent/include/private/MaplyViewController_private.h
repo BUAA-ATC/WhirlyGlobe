@@ -55,7 +55,7 @@
     MaplyTwoFingerTapDelegate *twoFingerTapDelegate;
     MaplyDoubleTapDragDelegate *doubleTapDragDelegate;
     MaplyTouchCancelAnimationDelegate *touchDelegate;
-    // Added by Sun
+    ///Added by Sun
     MaplyLongPressDelegate *longPressDelegate;
     
     /// Bounding box for the viewer

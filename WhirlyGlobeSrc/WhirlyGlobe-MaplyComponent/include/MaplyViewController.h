@@ -38,6 +38,7 @@
 @optional
 
 /** @brief Called when the user taps on or near an object.
+    @param selectedObj The objects selected.  Probably an NSMutableArray of MaplyVectorObject or MaplyScreenLabel or so on, it can also be nil. Added by Sun.
     @details You're given the object you passed in originally, such as a MaplyScreenMarker.  You can set a userObject on most of these to put your own data in there for tracking.
   */
 - (void)maplyViewController:(MaplyViewController *)viewC didSelect:(NSObject *)selectedObj;
@@ -45,7 +46,7 @@
 /** @brief User selected a given object and tapped at a given location.
     @details This is called when the user selects an object.  It differs from maplyViewController:didSelect: in that it passes on the location (in the local coordinate system) and the position on screen.
     @param viewC View Controller that saw the selection.
-    @param selectedObj The object selected.  Probably one of MaplyVectorObject or MaplyScreenLabel or so on.
+    @param selectedObj The objects selected.  Probably an NSMutableArray of MaplyVectorObject or MaplyScreenLabel or so on, it can also be nil. Modified by Sun.
     @param coord Location in the local coordinate system where the user tapped.
     @param screenPt Location on screen where the user tapped.
  */
@@ -56,10 +57,14 @@
   */
 - (void)maplyViewController:(MaplyViewController *)viewC didTapAt:(MaplyCoordinate)coord;
 
-/** @brief User longPressed at a given location. Added by Sun
- @details This is a longPress at a specific location on the map.  This won't be called if they tapped and selected, just for LongPress.
+/** @brief User long pressed at a given location. Added by Sun
+    @details This is a longpress at a specific location on the map.  This won't be called if they tapped and selected, just for Longpress.
+    @param selectedObj The objects selected.  Probably an NSMutableArray of MaplyVectorObject or MaplyScreenLabel or so on, it can also be nil.
+    @param coord Location in the local coordinate system where the user tapped.
+    @param screenPt Location on screen where the user tapped.
+    @param state state of longPressed. Begin, change and end.
  */
-- (void)maplyViewController:(MaplyViewController *__nonnull)viewC didLongPressedAt:(MaplyCoordinate)coord;
+- (void)maplyViewController:(MaplyViewController *)viewC didLongPressed:(NSObject *)selectedObj atLoc:(MaplyCoordinate)coord onScreen:(CGPoint)screenPt state:(UIGestureRecognizerState)state;
 
 /** @brief Called when the map starts moving.
  @param viewC The map view controller.

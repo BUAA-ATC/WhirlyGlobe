@@ -278,7 +278,9 @@ using namespace Maply;
     {
         // Wire up the gesture recognizers
         tapDelegate = [MaplyTapDelegate tapDelegateForView:glView mapView:mapView];
+        // Added by Sun
         longPressDelegate = [MaplyLongPressDelegate longPressDelegateForView:glView mapView:mapView];
+        // End Edit
         panDelegate = [MaplyPanDelegate panDelegateForView:glView mapView:mapView];
         pinchDelegate = [MaplyPinchDelegate pinchDelegateForView:glView mapView:mapView];
         pinchDelegate.minZoom = [mapView minHeightAboveSurface];
@@ -309,6 +311,12 @@ using namespace Maply;
             [tapDelegate.gestureRecognizer requireGestureRecognizerToFail:doubleTapDragDelegate.gestureRecognizer];
             [panDelegate.gestureRecognizer requireGestureRecognizerToFail:doubleTapDragDelegate.gestureRecognizer];
         }
+        // Added by Sun
+        if (longPressDelegate) {
+            [tapDelegate.gestureRecognizer requireGestureRecognizerToFail:longPressDelegate.gestureRecognizer];
+            [panDelegate.gestureRecognizer requireGestureRecognizerToFail:longPressDelegate.gestureRecognizer];
+        }
+        // End Edit
         if(_cancelAnimationOnTouch)
         {
             touchDelegate = [MaplyTouchCancelAnimationDelegate touchDelegateForView:glView mapView:mapView];
@@ -853,24 +861,30 @@ using namespace Maply;
         coord.x += 2*M_PI * std::ceil(std::abs((coord.x + M_PI)/(2*M_PI)));
     if (coord.x > M_PI)
         coord.x -= 2*M_PI * std::ceil((coord.x - M_PI)/(2*M_PI));
-
+    // Modifed by Sun
     if (selectedObj && self.selection)
     {
+        // 选中
         // The user selected something, so let the delegate know
         if (_delegate)
         {
-            if ([_delegate respondsToSelector:@selector(maplyViewController:didSelect:atLoc:onScreen:)])
+            if (msg.isLongPressed) {
+                if ([_delegate respondsToSelector:@selector(maplyViewController:didLongPressed:atLoc:onScreen:state:)] && msg.isLongPressed)
+                    [_delegate maplyViewController:self didLongPressed:selectedObj atLoc:coord onScreen:msg.touchLoc state:msg.state];
+            }
+            else if ([_delegate respondsToSelector:@selector(maplyViewController:didSelect:atLoc:onScreen:)])
                 [_delegate maplyViewController:self didSelect:selectedObj atLoc:coord onScreen:msg.touchLoc];
             else if ([_delegate respondsToSelector:@selector(maplyViewController:didSelect:)])
                 [_delegate maplyViewController:self didSelect:selectedObj];
         }
     } else {
+        // 未选中
         // The user didn't select anything, let the delegate know. Modified by Sun
         if (_delegate)
         {
             if (msg.isLongPressed) {
-                if ([_delegate respondsToSelector:@selector(maplyViewController:didLongPressedAt:)])
-                    [_delegate maplyViewController:self didLongPressedAt:coord];
+                if ([_delegate respondsToSelector:@selector(maplyViewController:didLongPressed:atLoc:onScreen:state:)])
+                    [_delegate maplyViewController:self didLongPressed:nil atLoc:coord onScreen:msg.touchLoc state:msg.state];
             }
             else if ([_delegate respondsToSelector:@selector(maplyViewController:didTapAt:)])
                 [_delegate maplyViewController:self didTapAt:coord];
@@ -879,6 +893,35 @@ using namespace Maply;
         if (_autoMoveToTap)
             [self animateToPosition:coord time:1.0];
     }
+    // End Edit
+}
+
+- (void)handleStart:(MaplyTapMessage *)msg {
+    
+}
+
+- (void)handleStart:(MaplyTapMessage *)msg didSelect:(NSObject *)selectedObj{
+    
+}
+
+// 正在移动
+- (void)handleMoving:(MaplyTapMessage *)msg {
+    MaplyCoordinate coord;
+    coord.x = msg.whereGeo.lon();
+    coord.y = msg.whereGeo.lat();
+    
+    // Adjust this if it's outside geographic bounds
+    if (coord.x < -M_PI)
+        coord.x += 2*M_PI * std::ceil(std::abs((coord.x + M_PI)/(2*M_PI)));
+    if (coord.x > M_PI)
+        coord.x -= 2*M_PI * std::ceil((coord.x - M_PI)/(2*M_PI));
+    if (msg.isLongPressed) {
+        
+    }
+}
+
+- (void)handleStop:(MaplyTapMessage *)msg {
+    
 }
 
 

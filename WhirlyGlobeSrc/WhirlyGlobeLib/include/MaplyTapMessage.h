@@ -41,7 +41,9 @@
 @property (nonatomic,assign) WhirlyKit::Point3f worldLoc;
 /// Where the eye was.
 @property (nonatomic,assign) float heightAboveSurface;
-/// 将消息标记为长按 Added by Sun
+/// long press flag. Added by Sun
 @property (nonatomic, assign) BOOL isLongPressed;
+/// long press gesture state. Added by Sun
+@property (nonatomic, assign) UIGestureRecognizerState state;
 
 @end
