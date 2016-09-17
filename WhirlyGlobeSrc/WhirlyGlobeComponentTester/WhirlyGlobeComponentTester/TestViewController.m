@@ -2371,7 +2371,6 @@ static const int NumMegaMarkers = 15000;
                           initWithCoordSystem:[[MaplySphericalMercator alloc] initWebStandard]
                           delegate:vecTiles];
         // 和其他layer进行相比
-        //[_HYBaseMapLayer setDrawPriority:340];
         _HYBaseMapLayer.drawPriority = 0;
         _HYBaseMapLayer.useTargetZoomLevel = YES;
         _HYBaseMapLayer.singleLevelLoading = NO;
