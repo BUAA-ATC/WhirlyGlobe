@@ -323,7 +323,10 @@ typedef std::map<SimpleIdentity,BasicDrawable *> DrawableIDMap;
                     if (layoutEngine)
                         justifyOff = Point2d(0,0);
                     
-                    screenShape->setDrawPriority(_labelInfo.drawPriority*100+1);
+                    //screenShape->setDrawPriority(_labelInfo.drawPriority*100+1);
+                    // Modified by Sun
+                    screenShape->setDrawPriority(_labelInfo.drawPriority);
+                    // End Edit
                     screenShape->setVisibility(_labelInfo.minVis, _labelInfo.maxVis);
                     screenShape->setKeepUpright(label.keepUpright);
                     

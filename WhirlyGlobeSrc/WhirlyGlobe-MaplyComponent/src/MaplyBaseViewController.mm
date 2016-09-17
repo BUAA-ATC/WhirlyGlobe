@@ -158,6 +158,7 @@ using namespace WhirlyKit;
     allowRepositionForAnnnotations = true;
     
     _screenObjectDrawPriorityOffset = 1000000;
+    //_screenObjectDrawPriorityOffset = 0;    // Modifyed by sun
     
     // Need this logic here to pull in the categories
     static bool dummyInit = false;

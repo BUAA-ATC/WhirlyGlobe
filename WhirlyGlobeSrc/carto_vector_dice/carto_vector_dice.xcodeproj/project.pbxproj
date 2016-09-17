@@ -16,7 +16,6 @@
 		2BADF97119ABAABE00C40CAA /* KompexSQLiteStatement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BADF96C19ABAABE00C40CAA /* KompexSQLiteStatement.cpp */; };
 		2BADF97319ABAABE00C40CAA /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 2BADF96E19ABAABE00C40CAA /* sqlite3.c */; };
 		2BBCF35B187E1D2000103DDF /* VectorDB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2BBCF359187E1D2000103DDF /* VectorDB.cpp */; };
-		2BBCF35D187F20B200103DDF /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BBCF35C187F20B200103DDF /* libz.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -54,7 +53,6 @@
 		2BADF97B19ABAACA00C40CAA /* sqlite3ext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sqlite3ext.h; path = "../../third-party/kompex-sqlite-wrapper/include/sqlite3ext.h"; sourceTree = "<group>"; };
 		2BBCF359187E1D2000103DDF /* VectorDB.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VectorDB.cpp; path = vector_dice/VectorDB.cpp; sourceTree = "<group>"; };
 		2BBCF35A187E1D2000103DDF /* VectorDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VectorDB.h; path = vector_dice/VectorDB.h; sourceTree = "<group>"; };
-		2BBCF35C187F20B200103DDF /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,7 +60,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2BBCF35D187F20B200103DDF /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,7 +78,6 @@
 		2BAD0EC31852876900FFB126 = {
 			isa = PBXGroup;
 			children = (
-				2BBCF35C187F20B200103DDF /* libz.dylib */,
 				2BBCF347187E1C7F00103DDF /* Kompex SQLite */,
 				2B3836B41874917600467ABD /* tinyxml2 */,
 				2BBCF358187E1CFC00103DDF /* VectorDB */,
@@ -233,7 +229,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -265,7 +261,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -287,7 +283,7 @@
 					"-lboost_system",
 				);
 				PRODUCT_NAME = carto_vector_dice;
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx10.11;
 			};
 			name = Debug;
 		};
@@ -308,7 +304,7 @@
 					"-lboost_system",
 				);
 				PRODUCT_NAME = carto_vector_dice;
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx10.11;
 			};
 			name = Release;
 		};

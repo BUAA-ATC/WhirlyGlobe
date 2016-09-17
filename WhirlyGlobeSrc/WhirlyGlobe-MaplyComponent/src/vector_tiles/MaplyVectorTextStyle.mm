@@ -162,16 +162,15 @@ typedef enum {
         if ([styleEntry[@"tilegeom"] isEqualToString:@"add"])
             self.geomAdditive = true;
         
+        subStyle->desc = [NSMutableDictionary dictionary];
         // ------ Edited By Zhikang Qin
         int drawPriority = 0;
         if (styleEntry[@"drawpriority"])
         {
             drawPriority = (int)[styleEntry[@"drawpriority"] integerValue];
         }
-        subStyle->desc[kMaplyDrawPriority] = @(drawPriority + kMaplyMarkerDrawPriorityDefault);
+        subStyle->desc[kMaplyDrawPriority] = @(drawPriority);   // Modified by Sun
         // ------ End Edit
-        
-        subStyle->desc = [NSMutableDictionary dictionary];
         subStyle->desc[kMaplyTextColor] = fillColor;
         subStyle->desc[kMaplyFont] = font;
         if (outlineColor)

@@ -247,7 +247,7 @@ static const int BaseEarthPriority = kMaplyImageLayerDrawPriorityDefault;
     [self addChildViewController:baseViewC];
     
     // This lets us mix screen space objects with everything else
-//    baseViewC.screenObjectDrawPriorityOffset = 0;
+    baseViewC.screenObjectDrawPriorityOffset = 0;
 
     if (perfMode == LowPerformance)
     {
@@ -342,6 +342,8 @@ static const int BaseEarthPriority = kMaplyImageLayerDrawPriorityDefault;
     //[self addWideVectors:nil];
     //[self addLinesLon:116 lat:39 toLon:118 lat:42 color:nil];
     //[self testLineDrag:119 lat:37 point2Lon:116 point2Lat:42];
+    [mapViewC animateToPosition:MaplyCoordinateMakeWithDegrees(116, 39) time:0.5];
+    [self testLayerPriority];
 }
 
 - (void)labelMarkerTest:(NSNumber *)time
@@ -2344,6 +2346,40 @@ static const int NumMegaMarkers = 15000;
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
 {
     [self changeMapContents];
+}
+
+
+#pragma mark - **************** 测试图层优先级
+- (void)testLayerPriority{
+    MaplyQuadPagingLayer *layer1 = [self fetchHYBaseMapLayer];
+    [mapViewC addLayer:layer1];
+}
+
+- (MaplyQuadPagingLayer *)fetchHYBaseMapLayer {
+    MaplyQuadPagingLayer *_HYBaseMapLayer;
+    if (!_HYBaseMapLayer) {
+        //地图数据
+        //MaplyVectorTiles *vecTiles = [[MaplyVectorTiles alloc] initWithDatabase:@"TestShapefile1" viewC:mapViewC];
+        MaplyVectorTiles *vecTiles = [[MaplyVectorTiles alloc] initWithDatabase:@"HYBaseMap" viewC:mapViewC];
+        //FIXME: 地图使用useWideVectors时，FPS较高，占用较多CPU资源
+        // 设置线宽属性
+        vecTiles.settings.useWideVectors = NO;
+        vecTiles.settings.wideVecCuttoff = 10.0;
+        vecTiles.settings.selectable = NO;
+        vecTiles.settings.markerImportance = MAXFLOAT;
+        _HYBaseMapLayer =[[MaplyQuadPagingLayer alloc]
+                          initWithCoordSystem:[[MaplySphericalMercator alloc] initWebStandard]
+                          delegate:vecTiles];
+        // 和其他layer进行相比
+        //[_HYBaseMapLayer setDrawPriority:340];
+        _HYBaseMapLayer.drawPriority = 0;
+        _HYBaseMapLayer.useTargetZoomLevel = YES;
+        _HYBaseMapLayer.singleLevelLoading = NO;
+        _HYBaseMapLayer.numSimultaneousFetches = 8;
+        //依据屏幕的信息，计算
+        _HYBaseMapLayer.importance = 512 * 512;
+    }
+    return _HYBaseMapLayer;
 }
 
 @end

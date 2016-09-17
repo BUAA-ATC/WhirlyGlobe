@@ -47,6 +47,9 @@ void MapnikConfig::CompiledSymbolizerTable::addSymbolizerGroup(MapnikConfig *map
                     group->geomType = Symbolizer::TileGeomAdd;
                     group->filter = rule.filter;
                     group->attrs.insert(rule.attrs.begin(),rule.attrs.end());
+                    // Added by Sun
+                    group->name = sym.name;
+                    // End Edit
                     groups[group->symType] = group;
                 } else
                     group = it->second;
@@ -82,7 +85,6 @@ void MapnikConfig::CompiledSymbolizerTable::SymbolizerGroup::toString(std::strin
     json += (std::string)"\t\t\t\"tilegeom\": " + "\"" + (geomType == Symbolizer::TileGeomAdd ? "add" : "replace") + "\",\n";
     
     json += (std::string)"\t\t\t\"substyles\" : [\n";
-    
     for (unsigned int ii=0;ii<subSyms.size();ii++)
     {
         subSyms[ii].toString(json);
@@ -92,6 +94,7 @@ void MapnikConfig::CompiledSymbolizerTable::SymbolizerGroup::toString(std::strin
     }
     json += (std::string)"\t\t\t]\n";
     json += "\t\t}";
+    
 }
 
 // Convert a color value from rgba(r,g,b,a) to #rrggbbaa if necessary
@@ -168,7 +171,6 @@ void MapnikConfig::CompiledSymbolizerTable::SubSymbolizer::toString(std::string 
     {
         json += indent + "\t\"" + "attribute" + "\": " + "\"" + bodyStr + "\"\n";
     }
-    
     json += indent + "}";
 }
 
