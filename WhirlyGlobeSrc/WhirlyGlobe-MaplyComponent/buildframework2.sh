@@ -9,7 +9,7 @@
 BUILT_PRODUCTS_SIMULATOR=`xcodebuild -target WhirlyGlobe-MaplyComponent -scheme WhirlyGlobe-MaplyComponent -configuration Release -sdk iphonesimulator -showBuildSettings | grep -m 1 "BUILT_PRODUCTS_DIR" | grep -oEi "\/.*"`
 BUILT_PRODUCTS_IPHONEOS=`xcodebuild -target WhirlyGlobe-MaplyComponent -scheme WhirlyGlobe-MaplyComponent -configuration Release -sdk iphoneos -showBuildSettings | grep -m 1 "BUILT_PRODUCTS_DIR" | grep -oEi "\/.*"`
 
-xcodebuild -target WhirlyGlobe-MaplyComponent -scheme WhirlyGlobe-MaplyComponent -configuration Release -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPad Air 2' clean build
+xcodebuild -target WhirlyGlobe-MaplyComponent -scheme WhirlyGlobe-MaplyComponent -configuration Release -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPad 2' clean build
 # xcodebuild -target WhirlyGlobe-MaplyComponent -configuration Debug -sdk iphoneos
 xcodebuild -target WhirlyGlobe-MaplyComponent -scheme WhirlyGlobe-MaplyComponent -configuration Release -sdk iphoneos -DONLY_ACTIVE_ARCH=NO
 
@@ -60,3 +60,4 @@ cp framework_info.plist $FRAMEWORK_DIR/Resources/Info.plist
 
 rm -rf WhirlyGlobeMaplyComponent.Framework
 mv $FRAMEWORK_DIR WhirlyGlobeMaplyComponent.framework
+

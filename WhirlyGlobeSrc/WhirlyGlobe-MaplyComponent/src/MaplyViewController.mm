@@ -416,6 +416,9 @@ using namespace Maply;
     return panDelegate.gestureRecognizer.enabled;
 }
 
+- (void)setPinchGesture:(bool)enabled {
+    pinchDelegate.gestureRecognizer.enabled = enabled;
+}
 
 - (void)setPanGesture:(bool)enabled
 {

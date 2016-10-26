@@ -325,7 +325,7 @@ typedef std::map<SimpleIdentity,BasicDrawable *> DrawableIDMap;
                     
                     //screenShape->setDrawPriority(_labelInfo.drawPriority*100+1);
                     // Modified by Sun
-                    screenShape->setDrawPriority(_labelInfo.drawPriority);
+                    screenShape->setDrawPriority(_labelInfo.drawPriority + 1);
                     // End Edit
                     screenShape->setVisibility(_labelInfo.minVis, _labelInfo.maxVis);
                     screenShape->setKeepUpright(label.keepUpright);
@@ -363,7 +363,10 @@ typedef std::map<SimpleIdentity,BasicDrawable *> DrawableIDMap;
                         smGeom.coords.push_back(Point2d(ll.x()+label.screenOffset.width,ur.y()+label.screenOffset.height)+ iconOff + justifyOff);
                         smGeom.coords.push_back(Point2d(ll.x()+label.screenOffset.width,ll.y()+label.screenOffset.height)+ iconOff + justifyOff);
 
-                        smGeom.drawPriority = _labelInfo.drawPriority*100;
+                        //smGeom.drawPriority = _labelInfo.drawPriority*100;
+                        // Modified by Sun
+                        smGeom.drawPriority = _labelInfo.drawPriority;
+                        // End Edit
                         smGeom.color = backColor;
                         // Note: This would be a great place for a texture
                         screenShape->addGeometry(smGeom);
