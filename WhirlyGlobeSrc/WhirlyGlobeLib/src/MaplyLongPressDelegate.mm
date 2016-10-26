@@ -44,37 +44,36 @@ using namespace WhirlyKit;
 // We'll let other gestures run
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
-    return TRUE;
+    return YES;
 }
 
 // Called for a longPress
 - (void)longPressAction:(id)sender
 {
-   	UILongPressGestureRecognizer *longPress = sender;
-    if (longPress.state == UIGestureRecognizerStateBegan) {
-        WhirlyKitEAGLView  *glView = (WhirlyKitEAGLView  *)longPress.view;
-        WhirlyKitSceneRendererES *sceneRender = glView.renderer;
-        CoordSystemDisplayAdapter *coordAdapter = mapView.coordAdapter;
-        //    WhirlyKit::Scene *scene = sceneRender.scene;
-        
-        // Just figure out where we tapped
-        Point3d hit;
-        Eigen::Matrix4d theTransform = [mapView calcFullMatrix];
-        CGPoint touchLoc = [longPress locationInView:longPress.view];
-        if ([mapView pointOnPlaneFromScreen:touchLoc transform:&theTransform frameSize:Point2f(sceneRender.framebufferWidth/glView.contentScaleFactor,sceneRender.framebufferHeight/glView.contentScaleFactor) hit:&hit clip:true])
-        {
-            MaplyTapMessage *msg = [[MaplyTapMessage alloc] init];
-            [msg setTouchLoc:touchLoc];
-            [msg setView:longPress.view];
-            [msg setWorldLoc:Point3f(hit.x(),hit.y(),hit.z())];
-            Point3d localPt = coordAdapter->displayToLocal(hit);
-            [msg setWhereGeo:coordAdapter->getCoordSystem()->localToGeographic(localPt)];
-            msg.heightAboveSurface = hit.z();
-            msg.isLongPressed = YES;
-            [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:MaplyTapMsg object:msg]];
-        } else {
-            // Not expecting this case
-        }
+    UILongPressGestureRecognizer *longPress = sender;
+    CGPoint touchLoc = [longPress locationInView:longPress.view];
+    WhirlyKitEAGLView  *glView = (WhirlyKitEAGLView  *)longPress.view;
+    WhirlyKitSceneRendererES *sceneRender = glView.renderer;
+    CoordSystemDisplayAdapter *coordAdapter = mapView.coordAdapter;
+    //    WhirlyKit::Scene *scene = sceneRender.scene;
+    
+    // Just figure out where we tapped
+    Point3d hit;
+    Eigen::Matrix4d theTransform = [mapView calcFullMatrix];
+    if ([mapView pointOnPlaneFromScreen:touchLoc transform:&theTransform frameSize:Point2f(sceneRender.framebufferWidth/glView.contentScaleFactor,sceneRender.framebufferHeight/glView.contentScaleFactor) hit:&hit clip:true])
+    {
+        MaplyTapMessage *msg = [[MaplyTapMessage alloc] init];
+        [msg setTouchLoc:touchLoc];
+        [msg setView:longPress.view];
+        [msg setWorldLoc:Point3f(hit.x(),hit.y(),hit.z())];
+        Point3d localPt = coordAdapter->displayToLocal(hit);
+        [msg setWhereGeo:coordAdapter->getCoordSystem()->localToGeographic(localPt)];
+        msg.heightAboveSurface = hit.z();
+        msg.isLongPressed = YES;
+        msg.state = longPress.state;
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:MaplyTapMsg object:msg]];
+    } else {
+        // Not expecting this case
     }
 }
 

@@ -67,7 +67,7 @@
         NSMutableDictionary *desc = [NSMutableDictionary dictionaryWithDictionary:
                                      @{kMaplyVecWidth: @(settings.lineScale * strokeWidth),
                                        kMaplyColor: strokeColor,
-                                       kMaplyDrawPriority: @(drawPriority+kMaplyVectorDrawPriorityDefault),
+                                       kMaplyDrawPriority: @(drawPriority), // Modified by Sun
                                        kMaplyEnable: @NO,
                                        kMaplyFade: @0.0,
                                        kMaplyVecCentered: @YES,

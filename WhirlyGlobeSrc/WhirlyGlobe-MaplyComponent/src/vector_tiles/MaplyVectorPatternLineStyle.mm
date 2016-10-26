@@ -87,7 +87,7 @@
             
             desc[kMaplyVecWidth] = @(patternImage.size.width);
             desc[kMaplyColor] = strokeColor;
-            desc[kMaplyDrawPriority] = @(drawPriority+kMaplyVectorDrawPriorityDefault);
+            desc[kMaplyDrawPriority] = @(drawPriority); // Modified by Sun
             desc[kMaplyEnable] = @NO;
             desc[kMaplyFade] = @0.0;
             desc[kMaplyVecCentered] = @YES;

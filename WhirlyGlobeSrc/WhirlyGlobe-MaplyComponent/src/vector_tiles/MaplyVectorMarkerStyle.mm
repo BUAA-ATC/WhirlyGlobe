@@ -108,8 +108,11 @@
             }
         }
         // ------ End Edit
-        
         subStyle->desc = [NSMutableDictionary dictionary];
+        // Added by Sun
+        if (styleEntry[@"drawpriority"])
+            [subStyle->desc setObject:styleEntry[@"drawpriority"] forKey:kMaplyDrawPriority];
+        // End Edit
         subStyle->desc[kMaplyEnable] = @NO;
         [self resolveVisibility:styleEntry settings:settings desc:subStyle->desc];
       

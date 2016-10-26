@@ -125,7 +125,7 @@ public:
     public:
         CompiledSymbolizerTable() : currentDrawPriority(0) { }
         
-        class SubSymbolizer
+         class SubSymbolizer
         {
         public:
             SubSymbolizer() : uuid(boost::uuids::random_generator()()) { }
@@ -173,6 +173,9 @@ public:
             
             // Symbolizers that inherit from this group
             std::vector<SubSymbolizer> subSyms;
+            
+            // Added by Sun
+            std::string name;
             
             // Attributes we want preserved in the source data
             std::set<std::string> attrs;

@@ -81,6 +81,9 @@ static const int BaseEarthPriority = kMaplyImageLayerDrawPriorityDefault;
 
 // Local interface for TestViewController
 // We'll hide a few things here
+
+#define kEFBLabelCustomPriority @"EFBLabelCustomPriority"
+#define kEFBLabelCustomDrawPriority 300
 @interface TestViewController ()
 {
     // The configuration view comes up when the user taps outside the globe
@@ -244,7 +247,7 @@ static const int BaseEarthPriority = kMaplyImageLayerDrawPriorityDefault;
     [self addChildViewController:baseViewC];
     
     // This lets us mix screen space objects with everything else
-//    baseViewC.screenObjectDrawPriorityOffset = 0;
+    baseViewC.screenObjectDrawPriorityOffset = 0;
 
     if (perfMode == LowPerformance)
     {
@@ -334,6 +337,13 @@ static const int BaseEarthPriority = kMaplyImageLayerDrawPriorityDefault;
     // Settings panel
     if (startupMapType != MaplyGlobeWithElevation)
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(showConfig)];
+    
+    //[self addAnAirwayPointwithlon:116 andLat:39];
+    //[self addWideVectors:nil];
+    //[self addLinesLon:116 lat:39 toLon:118 lat:42 color:nil];
+    //[self testLineDrag:119 lat:37 point2Lon:116 point2Lat:42];
+    [mapViewC animateToPosition:MaplyCoordinateMakeWithDegrees(116, 39) time:0.5];
+    [self testLayerPriority];
 }
 
 - (void)labelMarkerTest:(NSNumber *)time
@@ -412,6 +422,52 @@ static const int BaseEarthPriority = kMaplyImageLayerDrawPriorityDefault;
                           } mode:MaplyThreadCurrent]];
     
 //    [self performSelector:@selector(labelMarkerTest:) withObject:time afterDelay:[time floatValue]];
+}
+
+/** test*/
+- (void)addLinesLon:(float)lonS lat:(float)latS toLon:(float)lonE lat:(float)latE color:(UIColor *)color {
+    NSMutableArray *vectors = [[NSMutableArray alloc] init];
+    NSDictionary *desc = @{kMaplyColor: color, kMaplySubdivType: kMaplySubdivSimple, kMaplySubdivEpsilon: @(0.001), kMaplyVecWidth: @(4.0)};
+    
+    MaplyCoordinate coords[2];
+    coords[0] = MaplyCoordinateMakeWithDegrees(lonS, latS);
+    coords[1] = MaplyCoordinateMakeWithDegrees(lonE, latE);
+    MaplyVectorObject *vec = [[MaplyVectorObject alloc] initWithLineString:coords numCoords:2 attributes:nil];
+    [self addWideVectors:vec];
+}
+
+- (void)addAnAirwayPointwithlon:(double)lon andLat:(double)lat {
+    MaplyScreenMarker *airwayPointmarker;
+    airwayPointmarker = [[MaplyScreenMarker alloc] init];
+    airwayPointmarker.size = CGSizeMake(20,20);
+    //airwayPointmarker.color = [UIColor colorWithRed:47/255.0 green:157/255.0 blue:87/255.0 alpha:1];
+    airwayPointmarker.loc = MaplyCoordinateMakeWithDegrees(lon,lat);
+    airwayPointmarker.layoutImportance = MAXFLOAT;
+    UIImage *img = [UIImage imageNamed:@"circle"];
+    airwayPointmarker.image = img;
+    //airwayPointmarker.image = [UIImage imageNamed:@"nearAirport"];
+    airwayPointmarker.layoutImportance = MAXFLOAT;
+    
+    
+    
+    MaplyScreenLabel *label = [[MaplyScreenLabel alloc] init];
+    label.loc = MaplyCoordinateMakeWithDegrees(lon, lat);
+    //label.color = [UIColor blackColor];
+    //label.offset = CGPointMake(10, 0);
+    label.text = @"ndifasd";
+    label.layoutImportance = 0.1;
+    //label.iconImage2 = img;
+    //label.iconSize = CGSizeMake(20, 20);
+    [mapViewC addScreenLabels:@[label] desc:@{
+                                                   kMaplyFont: [UIFont boldSystemFontOfSize:9],
+                                                   kMaplyBackgroundColor:[UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.5],
+                                                   kEFBLabelCustomPriority:@(kEFBLabelCustomDrawPriority),
+                                                   kMaplyLabelHeight:@(20.0),
+                                                   kMaplyJustify:@"left"
+                                                   } mode:MaplyThreadCurrent];
+    
+    [mapViewC addScreenMarkers:@[airwayPointmarker] desc:nil];
+    
 }
 
 - (void)viewDidUnload
@@ -665,6 +721,19 @@ static const int BaseEarthPriority = kMaplyImageLayerDrawPriorityDefault;
     }
     
     modelsObj = [baseViewC addModelInstances:modelInstances desc:desc mode:MaplyThreadCurrent];
+}
+
+- (void)testLineDrag:(double)lon lat:(double)lat point2Lon:(double)lon2 point2Lat:(double)lat2 {
+    NSMutableArray *vectors = [[NSMutableArray alloc] init];
+    NSDictionary *desc = @{kMaplyColor: [UIColor redColor], kMaplySubdivType: kMaplySubdivSimple, kMaplySubdivEpsilon: @(0.001), kMaplyVecWidth: @(20.0)};
+    MaplyCoordinate coords[2];
+    coords[0] = MaplyCoordinateMakeWithDegrees(lon, lat);
+    coords[1] = MaplyCoordinateMakeWithDegrees(lon2, lat2);
+    MaplyVectorObject *vec = [[MaplyVectorObject alloc] initWithLineString:coords numCoords:2 attributes:nil];
+    vec.selectable = YES;
+    vec.userObject = @"Cflag";
+    [vectors addObject:vec];
+    latLonObj = [baseViewC addVectors:vectors desc:desc mode:MaplyThreadCurrent];
 }
 
 - (void)addLinesLon:(float)lonDelta lat:(float)latDelta color:(UIColor *)color
@@ -2250,8 +2319,9 @@ static const int NumMegaMarkers = 15000;
 
 #pragma mark - Maply delegate
 
-- (void)maplyViewController:(MaplyViewController *)viewC didSelect:(NSObject *)selectedObj
+- (void)maplyViewController:(MaplyViewController *)viewC didLongPressed:(NSObject *)selectedObj atLoc:(MaplyCoordinate)coord onScreen:(CGPoint)screenPt state:(UIGestureRecognizerState)state
 {
+    //NSLog(@"长按标记 lon:%f lat:%f posx:%f posy:%f sel:%@ %d", coord.x, coord.y, screenPt.x, screenPt.y, selectedObj, state);
     [self handleSelection:selectedObj];
 }
 
@@ -2276,6 +2346,39 @@ static const int NumMegaMarkers = 15000;
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
 {
     [self changeMapContents];
+}
+
+
+#pragma mark - **************** 测试图层优先级
+- (void)testLayerPriority{
+    MaplyQuadPagingLayer *layer1 = [self fetchHYBaseMapLayer];
+    [mapViewC addLayer:layer1];
+}
+
+- (MaplyQuadPagingLayer *)fetchHYBaseMapLayer {
+    MaplyQuadPagingLayer *_HYBaseMapLayer;
+    if (!_HYBaseMapLayer) {
+        //地图数据
+        //MaplyVectorTiles *vecTiles = [[MaplyVectorTiles alloc] initWithDatabase:@"TestShapefile1" viewC:mapViewC];
+        MaplyVectorTiles *vecTiles = [[MaplyVectorTiles alloc] initWithDatabase:@"HYBaseMap" viewC:mapViewC];
+        //FIXME: 地图使用useWideVectors时，FPS较高，占用较多CPU资源
+        // 设置线宽属性
+        vecTiles.settings.useWideVectors = NO;
+        vecTiles.settings.wideVecCuttoff = 10.0;
+        vecTiles.settings.selectable = NO;
+        vecTiles.settings.markerImportance = MAXFLOAT;
+        _HYBaseMapLayer =[[MaplyQuadPagingLayer alloc]
+                          initWithCoordSystem:[[MaplySphericalMercator alloc] initWebStandard]
+                          delegate:vecTiles];
+        // 和其他layer进行相比
+        _HYBaseMapLayer.drawPriority = 0;
+        _HYBaseMapLayer.useTargetZoomLevel = YES;
+        _HYBaseMapLayer.singleLevelLoading = NO;
+        _HYBaseMapLayer.numSimultaneousFetches = 8;
+        //依据屏幕的信息，计算
+        _HYBaseMapLayer.importance = 512 * 512;
+    }
+    return _HYBaseMapLayer;
 }
 
 @end

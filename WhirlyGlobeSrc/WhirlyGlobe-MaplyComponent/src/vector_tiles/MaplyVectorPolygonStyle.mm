@@ -51,7 +51,7 @@
         }
         NSMutableDictionary *desc = [NSMutableDictionary dictionaryWithDictionary:
                 @{kMaplyFilled: @(YES),
-                 kMaplyDrawPriority: @(drawPriority+kMaplyVectorDrawPriorityDefault),
+                 kMaplyDrawPriority: @(drawPriority),   // Modified by Sun
                   kMaplyVecCentered: @(true),
                   kMaplySelectable: @(self.selectable),
                   kMaplyEnable: @(NO)

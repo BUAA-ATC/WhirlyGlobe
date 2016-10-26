@@ -1289,7 +1289,10 @@ int main(int argc, char * argv[])
                 std::string styleStr;
                 MapnikConfig::CompiledSymbolizerTable::SymbolizerGroup &symGroup = mapnikConfig->compiledSymTable.symGroups[ii];
                 symGroup.toString(styleStr);
-                std::string name = "style " + std::to_string(ii);
+                //std::set<std::string>::iterator it = layerNames.begin();
+                //const std::string &layerName = *it;
+                //std::string name = "style " + std::to_string(ii);
+                std::string name = "style " + std::to_string(ii) + symGroup.name;
                 vectorDb->addStyle(name.c_str(), styleStr.c_str());
             }
             
