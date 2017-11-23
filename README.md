@@ -1,8 +1,7 @@
 BUAA EFB is based on WG 2.3 version.
 
-![BUAA EFB](http://7xr7dp.com1.z0.glb.clouddn.com/Icon-60@3x.png)
-
 ![WhirlyGlobe-Maply](/images/banner.jpg)
+
 
 If you're new to WhirlyGlobe-Maply, please go [read the main page](http://mousebird.github.com/WhirlyGlobe/).
 
