@@ -1,6 +1,6 @@
 BUAA EFB is based on WG 2.3 version.
-![](http://7xr7dp.com1.z0.glb.clouddn.com/Launch.png)
 
+![BUAA EFB](http://7xr7dp.com1.z0.glb.clouddn.com/Launch.png)
 
 ![WhirlyGlobe-Maply](/images/banner.jpg)
 
